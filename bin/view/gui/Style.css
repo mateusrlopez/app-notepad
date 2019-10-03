@@ -51,7 +51,8 @@
 }
 
 .text-area{
-	-fx-font-family: Open Sans;
+	-fx-font-family: Proxima Nova;
+	-fx-font-weight: bold;
     -fx-font-size: 13;
     -fx-text-fill: -fx-fourth-color;
     -fx-display-caret: true;

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -14,34 +16,92 @@
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#handleNewTabs" text="Novo" />
-            <MenuItem mnemonicParsing="false" onAction="#handleOpenAction" text="Abrir..." />
-            <Menu mnemonicParsing="false" text="Abrir Recente" />
+            <MenuItem mnemonicParsing="false" onAction="#handleNewTabs" text="Novo">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="FILE" />
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+            <MenuItem mnemonicParsing="false" onAction="#handleOpenAction" text="Abrir... ">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="FOLDER_OPEN" />
+                     </graphic></MenuItem>
+            <Menu mnemonicParsing="false" text="Abrir Recente">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="FOLDER_OPEN" />
+                     </graphic></Menu>
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" onAction="#handleCloseTabs" text="Fechar" />
-            <MenuItem mnemonicParsing="false" text="Salvar" />
-            <MenuItem mnemonicParsing="false" onAction="#handleSaveAsAction" text="Salvar Como..." />
+            <MenuItem mnemonicParsing="false" onAction="#handleCloseTabs" text="Fechar">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="W" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="CLOSE" />
+                     </graphic></MenuItem>
+            <MenuItem mnemonicParsing="false" text="Salvar">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="SAVE" />
+                     </graphic></MenuItem>
+            <MenuItem mnemonicParsing="false" onAction="#handleSaveAsAction" text="Salvar Como...">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="SAVE" />
+                     </graphic></MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" onAction="#closeApplication" text="Sair" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
           <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
+            <MenuItem mnemonicParsing="false" text="Undo">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="UNDO" />
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+            <MenuItem mnemonicParsing="false" text="Redo">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="REPEAT" />
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
+            <MenuItem mnemonicParsing="false" text="Cut">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="CUT" />
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+            <MenuItem mnemonicParsing="false" text="Copy">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="COPY" />
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+            <MenuItem mnemonicParsing="false" text="Paste">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="PASTE" />
+                     </graphic>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="V" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             <MenuItem mnemonicParsing="false" text="Delete" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
+            <MenuItem mnemonicParsing="false" text="Select All">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="A" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             <MenuItem mnemonicParsing="false" text="Unselect All" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
           </items>
         </Menu>
       </menus>

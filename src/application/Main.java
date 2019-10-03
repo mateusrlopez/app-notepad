@@ -18,7 +18,7 @@ public class Main extends Application {
 			Scene scene = new Scene(parent);
 			NotepadViewController controller = (NotepadViewController) loader.getController();
 			stage.setScene(scene);
-			controller.stageSceneSetters(stage,scene);
+			controller.setStage(stage);
 			stage.setTitle("Notepad");
 			stage.getIcons().add(new Image("/view/images/Notepad.png"));
 			stage.show();

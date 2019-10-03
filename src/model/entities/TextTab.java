@@ -14,4 +14,8 @@ public class TextTab extends Tab {
 		textArea.setText(text);
 		setContent(textArea);
 	}
+	
+	public TextArea getTextArea() {
+		return textArea;
+	}
 }

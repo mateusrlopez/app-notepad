@@ -1,7 +1,9 @@
 package model.utils;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class FileHandler {
@@ -17,5 +19,13 @@ public class FileHandler {
 			e.printStackTrace();
 		}
 		return fileText;
+	}
+	
+	public static void fileWriter(String path,String text) {
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter(path))){
+			bw.write(text);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
