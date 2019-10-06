@@ -9,9 +9,9 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import view.gui.NotepadViewController;
 
 public class Dialog {
-	
 	public static void showDialog(String title, Event event) {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Notepad");
@@ -29,7 +29,7 @@ public class Dialog {
 		stage.getIcons().add(new Image("/view/images/Notepad.png"));
 		
 		Optional<ButtonType> result = alert.showAndWait();
-		if(result.get() == buttonSalvar) System.out.println("Apertou aqui");
+		if(result.get() == buttonSalvar) NotepadViewController.saveAction();
 		else if(result.get() == buttonCancelar) event.consume();	
 	}
 }

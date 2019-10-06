@@ -2,6 +2,7 @@ package model.entities;
 
 import java.io.File;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
@@ -33,6 +34,10 @@ public class TextTab extends Tab {
 		});
 		filePath = (file == null) ? null : file.getAbsolutePath();
 		setContent(textArea);
+	}
+	
+	public void close() {
+		Event.fireEvent(this, new Event(Tab.TAB_CLOSE_REQUEST_EVENT));
 	}
 	
 	public TextArea getTextArea() {

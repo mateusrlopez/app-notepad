@@ -7,9 +7,7 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -17,7 +15,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.stage.FileChooser;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.entities.FileMenuItem;
 import model.entities.TextTab;
@@ -26,20 +23,20 @@ import model.utils.FileHandler;
 import view.gui.utils.Dialog;
 
 public class NotepadViewController implements Initializable, Constants {
-	@FXML private Stage stage;
+	@FXML private static Stage stage;
 
 	@FXML private TabPane tabPane;
 	@FXML private TextTab emptyTab;
-	@FXML private SingleSelectionModel<Tab> selectionModel;
+	@FXML private static SingleSelectionModel<Tab> selectionModel;
 	
 	@FXML private Menu openRecent;
 	
 	@FXML private final Clipboard clipboard = Clipboard.getSystemClipboard();
     @FXML private final ClipboardContent content = new ClipboardContent();
 
-    TextTab currentTab;
+    private static TextTab currentTab;
 	FileChooser fileLoader = new FileChooser();
-	FileChooser fileSaver = new FileChooser();
+	private static FileChooser fileSaver = new FileChooser();
 
 	@Override public void initialize(URL url, ResourceBundle rb) {
 		fileLoader.setTitle("Abrir");
@@ -81,6 +78,10 @@ public class NotepadViewController implements Initializable, Constants {
 	}
 	
 	@FXML public void handleSaveAction() {
+		saveAction();
+	}
+	
+	public static void saveAction() {
 		currentTab = (TextTab) selectionModel.getSelectedItem();
 		if(currentTab != null && !currentTab.isSaved()) {
 			if(currentTab.isFirstTimeSave()) {
@@ -90,7 +91,7 @@ public class NotepadViewController implements Initializable, Constants {
 		}
 	}
 	
-	private void handleSaves(boolean type,File file) {
+	private static void handleSaves(boolean type,File file) {
 		String text = currentTab.getTextArea().getText().replaceAll("\n", System.getProperty("line.separator"));
 		FileHandler.fileWriter((type)?file.getAbsolutePath():currentTab.getFilePath(),text);
 		currentTab.setText((type)?file.getName():BACKSP.apply(currentTab.getText()));
@@ -114,7 +115,10 @@ public class NotepadViewController implements Initializable, Constants {
 
 	@FXML public void handleCloseTabs() {
 		currentTab = (TextTab) selectionModel.getSelectedItem();
-		if (currentTab != null) tabPane.getTabs().remove(currentTab);
+		if (currentTab != null) {
+			currentTab.close();
+			tabPane.getTabs().remove(currentTab);
+		}
 	}
 	
 	@FXML public void handleCut() {
@@ -166,7 +170,7 @@ public class NotepadViewController implements Initializable, Constants {
 	}
 
 	public void setStage(Stage stage) {
-		this.stage = stage;
+		NotepadViewController.stage = stage;
 		
 		stage.setOnCloseRequest(event -> {
 			for(int i=0; i<tabPane.getTabs().size(); i++) {
