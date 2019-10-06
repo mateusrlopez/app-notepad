@@ -34,7 +34,6 @@
 .tab-pane .tab{
     -fx-background-color: -fx-terciary-color;
     -fx-focus-color: transparent;
-
 }
 .tab-pane .tab:selected{
     -fx-background-color: -fx-secondary-color;
@@ -74,4 +73,12 @@
 .text-area .scroll-pane .scroll-bar:vertical .thumb {
     -fx-background-color: -fx-primary-color;
     -fx-background-radius: 7pt;
+}
+
+.close-button:hover{
+	-fx-background-color: #d30000;
+}
+
+.minimize-button:hover{
+	-fx-background-color: #5C616B;
 }
