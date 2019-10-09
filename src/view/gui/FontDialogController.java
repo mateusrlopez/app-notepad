@@ -13,6 +13,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -45,13 +46,14 @@ public class FontDialogController implements Initializable,Constants {
 	
 	@Override public void initialize(URL url, ResourceBundle rb) {
 		fontTextField.setText((lastFont != null)? lastFont:"Arial");
-		sizeTextField.setText((lastSize != 0.0) ? String.format("%f",lastSize):"12");
+		sizeTextField.setText((lastSize != 0.0) ? String.format("%d",(int)lastSize):"12");
+		
+		addListener();
 		
 		fontListView.setItems(fonts);
 		sizeListView.setItems(sizes);
 		
-		Constraints.setTextFieldDouble(sizeTextField);
-		Constraints.setTextFieldNonNumeric(fontTextField);
+		Constraints.setTextFieldInteger(sizeTextField);
 	}
 	
 	@FXML private void buttonAction(ActionEvent event) {
@@ -64,6 +66,36 @@ public class FontDialogController implements Initializable,Constants {
 		} else 
 			font = null;
 		((Stage)button.getScene().getWindow()).close();
+	}
+	
+	@FXML private void listViewAction(MouseEvent event) {
+		ListView listView =(ListView) event.getSource();
+		TextField textField = (listView.getId().equals("fontListView"))? fontTextField:sizeTextField;
+		textField.setText(listView.getSelectionModel().getSelectedItem().toString());
+	}
+	
+	private void addListener() {
+		fontTextField.textProperty().addListener((obs,oldValue,newValue) -> {
+			if(Font.getFamilies().contains(newValue))
+				labelPreview.setFont(Font.font(newValue));
+		});
+		
+		sizeTextField.textProperty().addListener((obs,oldValue,newValue) -> {
+			if(newValue != null)
+				labelPreview.setFont(Font.font((!newValue.equals(""))?Double.parseDouble(newValue):12));
+		});
+		
+		boldCheckBox.selectedProperty().addListener(event -> {
+			labelPreview.setFont(Font.font("",(boldCheckBox.isSelected())?FontWeight.BOLD:FontWeight.NORMAL,
+					(italicCheckBox.isSelected())?FontPosture.ITALIC:FontPosture.REGULAR,
+					(!sizeTextField.getText().equals(""))? Double.parseDouble(sizeTextField.getText()):12));
+		});
+		
+		italicCheckBox.selectedProperty().addListener(event -> {
+			labelPreview.setFont(Font.font("",(boldCheckBox.isSelected())?FontWeight.BOLD:FontWeight.NORMAL,
+					(italicCheckBox.isSelected())?FontPosture.ITALIC:FontPosture.REGULAR, 
+					(!sizeTextField.getText().equals(""))? Double.parseDouble(sizeTextField.getText()):12));
+		});
 	}
 
 }

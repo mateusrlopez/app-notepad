@@ -124,7 +124,7 @@ public class NotepadViewController implements Initializable, Constants {
 	}
 
 	private void createTabs(File file) {
-		emptyTab = new TextTab(file,this);
+		emptyTab = new TextTab(file,this,FontDialogController.font);
 		tabPane.getTabs().add(emptyTab);
 		selectionModel.selectLast();
 	}

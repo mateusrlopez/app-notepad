@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
+import javafx.scene.text.Font;
 import model.utils.Constants;
 import model.utils.FileHandler;
 import view.gui.NotepadViewController;
@@ -18,13 +19,13 @@ public class TextTab extends Tab implements Constants {
 	private boolean firstTimeSave;
 	private boolean saved;
 
-	public TextTab(File file,NotepadViewController controller) {
+	public TextTab(File file,NotepadViewController controller,Font font) {
 		super((file == null) ? "untitled" : file.getName());
 		firstTimeSave = file == null;
 		saved = true;
 		textArea = new TextArea();
 		textArea.setPrefSize(640,276);
-		textArea.setFocusTraversable(false);
+		if(font != null) textArea.setFont(font);
 		textArea.setText((file != null) ? FileHandler.fileReader(file.getAbsolutePath()):"");
 		textArea.textProperty().addListener((obs, oldValue, newValue) -> {
 			if(newValue != null && saved) {
