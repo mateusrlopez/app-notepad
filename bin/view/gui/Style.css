@@ -13,7 +13,7 @@
   -fx-background-color: -fx-terciary-color;
 }
 .menu-bar .label {
-    -fx-font-size: 13;
+    -fx-font-size: 13.0;
     -fx-font-family: Open Sans;
 }
 .menu:hover,.menu:showing,.menu-item:focused {
@@ -24,11 +24,15 @@
 	-fx-text-fill: -fx-fourth-color;
 }
 
+.check-menu-item:checked .left-container .check {
+	-fx-mark-color: -fx-fourth-color; 
+}
+
 .tab-pane .tab-header-area .tab-header-background {
-    -fx-opacity: 0;
+    -fx-opacity: 0.0;
 }
 .tab-pane {
-    -fx-tab-min-width: 75px;
+    -fx-tab-min-width: 75.0px;
 }
 
 .tab-pane .tab{
@@ -41,7 +45,7 @@
 .tab .tab-label { 
     -fx-alignment: CENTER;
     -fx-text-fill: #828282;
-    -fx-font-size: 12px;
+    -fx-font-size: 12.0px;
     -fx-font-weight: bold;
 }
 .tab:selected .tab-label { 
@@ -49,10 +53,12 @@
     -fx-text-fill: -fx-fourth-color;
 }
 
+.tab-header-area .tab{
+    -fx-border-radius: 10.0 10.0 0.0 0.0;
+    -fx-background-radius: 10.0 10.0 0.0 0.0;
+}
+
 .text-area{
-	-fx-font-family: Proxima Nova;
-	-fx-font-weight: bold;
-    -fx-font-size: 13;
     -fx-text-fill: -fx-fourth-color;
     -fx-display-caret: true;
     -fx-text-box-border: -fx-secondary-color;
@@ -72,7 +78,7 @@
 .text-area .scroll-pane .scroll-bar:horizontal .thumb,
 .text-area .scroll-pane .scroll-bar:vertical .thumb {
     -fx-background-color: -fx-primary-color;
-    -fx-background-radius: 7pt;
+    -fx-background-radius: 7.0pt;
 }
 
 .close-button:hover{

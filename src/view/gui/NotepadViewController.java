@@ -1,54 +1,71 @@
 package view.gui;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.FileMenuItem;
 import model.entities.TextTab;
 import model.utils.Constants;
 import model.utils.FileHandler;
-import view.gui.utils.Dialog;
+import view.gui.utils.Dialogs;
 
 public class NotepadViewController implements Initializable, Constants {
-	@FXML private static Stage stage;
+	@FXML private Stage stage;
 
 	@FXML private TabPane tabPane;
 	@FXML private TextTab emptyTab;
-	@FXML private static SingleSelectionModel<Tab> selectionModel;
+	@FXML private SingleSelectionModel<Tab> selectionModel;
 	
 	@FXML private Menu openRecent;
+	@FXML private CheckMenuItem wrapText;
 	
 	@FXML private final Clipboard clipboard = Clipboard.getSystemClipboard();
     @FXML private final ClipboardContent content = new ClipboardContent();
 
-    private static TextTab currentTab;
-	FileChooser fileLoader = new FileChooser();
-	private static FileChooser fileSaver = new FileChooser();
+    private TextTab currentTab;
+    private TextArea textArea;
+	private FileChooser fileLoader = new FileChooser();
+	private FileChooser fileSaver = new FileChooser();
 
 	@Override public void initialize(URL url, ResourceBundle rb) {
 		fileLoader.setTitle("Abrir");
-		fileLoader.setInitialDirectory(new File(INITIAL_DIRECTORY));
-		fileLoader.getExtensionFilters().add(new FileChooser.ExtensionFilter("Arquivo de texto", "*.txt"));
+		settingFileChooser(fileLoader);
 
 		fileSaver.setTitle("Salvar como");
-		fileSaver.setInitialDirectory(new File(INITIAL_DIRECTORY));
 		fileSaver.setInitialFileName("Texto");
-		fileSaver.getExtensionFilters().add(new FileChooser.ExtensionFilter("Arquivo de texto", "*.txt"));
+		settingFileChooser(fileSaver);
 
 		selectionModel = tabPane.getSelectionModel();
+	}
+	
+	private void settingFileChooser(FileChooser fileChooser) {
+		fileChooser.setInitialDirectory(new File(INITIAL_DIRECTORY));
+		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Arquivo de texto", "*.txt"),
+				new FileChooser.ExtensionFilter("Arquivo C/C++", "*.c", "*.cpp"),
+				new FileChooser.ExtensionFilter("Arquivo Java", "*.java"),
+				new FileChooser.ExtensionFilter("Arquivo Python", "*.py"));
 	}
 
 	@FXML public void handleOpenAction() {
@@ -69,21 +86,20 @@ public class NotepadViewController implements Initializable, Constants {
 		}
 	}
 
-	@FXML public void handleSaveAsAction() {
+	@FXML private void handleSaveAsAction() {
 		File file = fileSaver.showSaveDialog(stage);
 		currentTab = (TextTab) selectionModel.getSelectedItem();
-		if (file != null && currentTab != null) {
-			handleSaves(true,file);
+		if (file != null && currentTab != null) 
+			handleSaves(true,file);			
 		}
-	}
 	
-	@FXML public void handleSaveAction() {
+	@FXML private void handleSaveAction() {
 		saveAction();
 	}
 	
-	public static void saveAction() {
+	public void saveAction() {
 		currentTab = (TextTab) selectionModel.getSelectedItem();
-		if(currentTab != null && !currentTab.isSaved()) {
+		if(currentTab != null) {
 			if(currentTab.isFirstTimeSave()) {
 				File file = fileSaver.showSaveDialog(stage);
 				if(file != null) handleSaves(true,file);
@@ -91,7 +107,7 @@ public class NotepadViewController implements Initializable, Constants {
 		}
 	}
 	
-	private static void handleSaves(boolean type,File file) {
+	private void handleSaves(boolean type,File file) {
 		String text = currentTab.getTextArea().getText().replaceAll("\n", System.getProperty("line.separator"));
 		FileHandler.fileWriter((type)?file.getAbsolutePath():currentTab.getFilePath(),text);
 		currentTab.setText((type)?file.getName():BACKSP.apply(currentTab.getText()));
@@ -103,25 +119,25 @@ public class NotepadViewController implements Initializable, Constants {
 		}
 	}
 
-	@FXML public void handleNewTabs() {
+	@FXML private void handleNewTabs() {
 		createTabs(null);
 	}
 
 	private void createTabs(File file) {
-		emptyTab = new TextTab(file);
+		emptyTab = new TextTab(file,this);
 		tabPane.getTabs().add(emptyTab);
 		selectionModel.selectLast();
 	}
-
-	@FXML public void handleCloseTabs() {
+	
+	@FXML private void handleUndo() {
 		currentTab = (TextTab) selectionModel.getSelectedItem();
-		if (currentTab != null) {
-			currentTab.close();
-			tabPane.getTabs().remove(currentTab);
+		if(currentTab != null) {
+			textArea = currentTab.getTextArea();
+			if(textArea.isUndoable()) textArea.undo();
 		}
 	}
 	
-	@FXML public void handleCut() {
+	@FXML private void handleCut() {
 		TextTab currentTab = (TextTab) selectionModel.getSelectedItem();
 		if(currentTab != null) {
 		    content.putString(currentTab.getTextArea().getSelectedText());
@@ -130,7 +146,7 @@ public class NotepadViewController implements Initializable, Constants {
 		}
 	}
 	
-	@FXML public void handleCopy() {
+	@FXML private void handleCopy() {
 		TextTab currentTab = (TextTab) selectionModel.getSelectedItem();
 		if(currentTab != null) {
 		    content.putString(currentTab.getTextArea().getSelectedText());
@@ -138,10 +154,10 @@ public class NotepadViewController implements Initializable, Constants {
 		}
 	}
 	
-	@FXML public void handlePaste() {
+	@FXML private void handlePaste() {
 		TextTab currentTab = (TextTab) selectionModel.getSelectedItem();
 		if(currentTab != null && clipboard.hasString()) {
-			TextArea textArea = currentTab.getTextArea();
+			textArea = currentTab.getTextArea();
 			if(textArea.isFocused()) {
 				if(!textArea.getSelectedText().equals("")) textArea.replaceSelection(clipboard.getString());
 				else textArea.appendText(clipboard.getString());
@@ -149,33 +165,71 @@ public class NotepadViewController implements Initializable, Constants {
 		}
 	}
 	
-	@FXML public void handleSelectAll() {
+	@FXML private void handleDelete() {
 		TextTab currentTab = (TextTab) selectionModel.getSelectedItem();
 		if (currentTab != null) {
-			TextArea textArea = currentTab.getTextArea();
+			textArea = currentTab.getTextArea();
+			if(!textArea.getSelectedText().equals("")) textArea.replaceSelection("");
+		}
+	}
+	
+	@FXML private void handleSelectAll() {
+		currentTab = (TextTab) selectionModel.getSelectedItem();
+		if (currentTab != null) {
+			textArea = currentTab.getTextArea();
 			if(textArea.isFocused()) textArea.selectAll();
 		}
 	}
 	
-	@FXML public void handleUnselectAll() {
-		TextTab currentTab = (TextTab) selectionModel.getSelectedItem();
-		if (currentTab != null) {
-			TextArea textArea = currentTab.getTextArea();
-			if(textArea.isFocused() && !textArea.getSelectedText().equals("")) textArea.deselect();
+	@FXML private void handleWrapText() {
+		for(int i=0; i<tabPane.getTabs().size(); i++) 
+			((TextTab)tabPane.getTabs().get(i)).getTextArea().setWrapText(wrapText.isSelected());
+	}
+	
+	@FXML private void changeFont() {
+		createDialog();
+		if(FontDialogController.font != null) {
+			for(int i=0; i<tabPane.getTabs().size(); i++) {
+				currentTab = (TextTab) tabPane.getTabs().get(i);
+				currentTab.getTextArea().setFont(FontDialogController.font);
+			}
+		}
+	}
+	
+	private void createDialog() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/gui/FontDialog.fxml"));
+			Pane pane = loader.load();
+			
+			Stage stage = new Stage();
+			stage.setTitle("Escolha uma fonte");
+			stage.getIcons().add(new Image("/view/images/Notepad.png"));
+			stage.setScene(new Scene(pane));
+			stage.setResizable(false);
+			stage.setOnCloseRequest(event -> FontDialogController.font = null);
+			stage.initOwner(this.stage);
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.showAndWait();			
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
-	@FXML public void closeApplication() {
+	@FXML private void closeApplication() {
 		System.exit(0);
 	}
 
 	public void setStage(Stage stage) {
-		NotepadViewController.stage = stage;
+		this.stage = stage;
 		
 		stage.setOnCloseRequest(event -> {
 			for(int i=0; i<tabPane.getTabs().size(); i++) {
 				currentTab = (TextTab) tabPane.getTabs().get(i);
-				if(!currentTab.isSaved()) Dialog.showDialog(BACKSP.apply(currentTab.getText()),event);
+				if(!currentTab.isSaved()) { 
+					Optional<ButtonType> result = Dialogs.showSaveAlert(BACKSP.apply(currentTab.getText()));
+					if(result.get().equals(Dialogs.buttonSalvar)) saveAction();
+					else if(result.get().equals(Dialogs.buttonCancelar)) event.consume();
+				}
 			}
 		});
 	}

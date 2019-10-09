@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -14,7 +15,7 @@
   <children>
     <MenuBar>
       <menus>
-        <Menu mnemonicParsing="false" text="File">
+        <Menu mnemonicParsing="false" text="Arquivo">
           <items>
             <MenuItem mnemonicParsing="false" onAction="#handleNewTabs" text="Novo">
                      <graphic>
@@ -38,14 +39,6 @@
                      </graphic>
                   </Menu>
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" onAction="#handleCloseTabs" text="Fechar">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="W" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                     <graphic>
-                        <FontAwesomeIcon fill="WHITE" glyphName="CLOSE" />
-                     </graphic>
-                  </MenuItem>
             <MenuItem mnemonicParsing="false" onAction="#handleSaveAction" text="Salvar">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
@@ -60,12 +53,15 @@
                      </graphic>
                   </MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" onAction="#closeApplication" text="Sair" />
+            <MenuItem mnemonicParsing="false" onAction="#closeApplication" text="Sair">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="CLOSE" size="1.2em" />
+                     </graphic></MenuItem>
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
+        <Menu mnemonicParsing="false" text="Editar">
           <items>
-            <MenuItem mnemonicParsing="false" text="Undo">
+            <MenuItem mnemonicParsing="false" onAction="#handleUndo" text="Desfazer">
                      <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="UNDO" />
                      </graphic>
@@ -73,16 +69,8 @@
                         <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-            <MenuItem mnemonicParsing="false" text="Redo">
-                     <graphic>
-                        <FontAwesomeIcon fill="WHITE" glyphName="REPEAT" />
-                     </graphic>
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                  </MenuItem>
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" onAction="#handleCut" text="Cut">
+            <MenuItem mnemonicParsing="false" onAction="#handleCut" text="Recortar">
                      <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="CUT" />
                      </graphic>
@@ -90,7 +78,7 @@
                         <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#handleCopy" text="Copy">
+            <MenuItem mnemonicParsing="false" onAction="#handleCopy" text="Copiar">
                      <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="COPY" />
                      </graphic>
@@ -98,7 +86,7 @@
                         <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#handlePaste" text="Paste">
+            <MenuItem mnemonicParsing="false" onAction="#handlePaste" text="Colar">
                      <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="PASTE" />
                      </graphic>
@@ -106,16 +94,21 @@
                         <KeyCodeCombination alt="UP" code="V" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-            <MenuItem mnemonicParsing="false" text="Delete" />
+            <MenuItem mnemonicParsing="false" onAction="#handleDelete" text="Deletar" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" onAction="#handleSelectAll" text="Select All">
+            <MenuItem mnemonicParsing="false" onAction="#handleSelectAll" text="Selecionar Tudo">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="A" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#handleUnselectAll" text="Unselect All" />
           </items>
         </Menu>
+            <Menu mnemonicParsing="false" text="Formatar">
+              <items>
+                  <CheckMenuItem fx:id="wrapText" mnemonicParsing="false" onAction="#handleWrapText" text="Quebra de linha" />
+                  <MenuItem mnemonicParsing="false" onAction="#changeFont" text="Fonte..." />
+              </items>
+            </Menu>
       </menus>
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" stylesheets="@Style.css" VBox.vgrow="ALWAYS">

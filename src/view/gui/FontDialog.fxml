@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="325.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.FontDialogController">
+   <children>
+      <Button fx:id="btOk" layoutX="358.0" layoutY="290.0" mnemonicParsing="false" onAction="#buttonAction" prefHeight="30.0" prefWidth="65.0" text="Ok" />
+      <Button fx:id="btCancelar" layoutX="429.0" layoutY="290.0" mnemonicParsing="false" onAction="#buttonAction" prefHeight="30.0" prefWidth="65.0" text="Cancelar" />
+      <ListView fx:id="fontListView" focusTraversable="false" layoutX="14.0" layoutY="63.0" prefHeight="200.0" prefWidth="177.0" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="309.0" AnchorPane.topAnchor="63.0" />
+      <CheckBox fx:id="boldCheckBox" layoutX="346.0" layoutY="63.0" mnemonicParsing="false" text="Negrito" />
+      <CheckBox fx:id="italicCheckBox" layoutX="346.0" layoutY="87.0" mnemonicParsing="false" text="Itálico" />
+      <ListView fx:id="sizeListView" focusTraversable="false" layoutX="204.0" layoutY="63.0" prefHeight="200.0" prefWidth="135.0" AnchorPane.leftAnchor="204.0" AnchorPane.topAnchor="63.0" />
+      <Label layoutX="346.0" layoutY="120.0" prefHeight="17.0" prefWidth="122.0" text="Preview" />
+      <Label fx:id="labelPreview" alignment="CENTER" layoutX="346.0" layoutY="137.0" prefHeight="126.0" prefWidth="135.0" text="ABC abc XYZ xyz" />
+      <TextField fx:id="fontTextField" layoutX="14.0" layoutY="38.0" prefHeight="25.0" prefWidth="177.0" />
+      <TextField fx:id="sizeTextField" layoutX="204.0" layoutY="38.0" prefHeight="25.0" prefWidth="135.0" />
+      <Label layoutX="14.0" layoutY="21.0" prefHeight="17.0" prefWidth="88.0" text="Família" />
+      <Label layoutX="204.0" layoutY="21.0" text="Tamanho" />
+   </children>
+</AnchorPane>
