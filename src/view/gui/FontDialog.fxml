@@ -22,7 +22,7 @@
       <Label layoutX="204.0" layoutY="21.0" text="Tamanho" />
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black;" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="204.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="187.0">
          <children>
-            <Label fx:id="labelPreview" alignment="CENTER" prefHeight="76.0" prefWidth="285.0" text="ABC abc XYZ xyz" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <Label fx:id="labelPreview" alignment="CENTER" ellipsisString="" prefHeight="76.0" prefWidth="285.0" text="ABC abc XYZ xyz" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
    </children>

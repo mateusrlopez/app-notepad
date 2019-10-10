@@ -2,6 +2,7 @@ package view.gui.utils;
 
 import java.util.Optional;
 
+import javafx.event.Event;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -14,7 +15,7 @@ public class Dialogs {
 	public static ButtonType buttonCancelar;
 	public static ButtonType buttonDontSave;
 
-	public static Optional<ButtonType> showSaveAlert(String title) {
+	public static Optional<ButtonType> showSaveAlert(String title,Event e) {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Notepad");
 		alert.setContentText(String.format("Deseja salvar as alterações em %s?", title));
@@ -29,6 +30,11 @@ public class Dialogs {
 
 		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 		stage.getIcons().add(new Image("/view/images/Notepad.png"));
+		
+		stage.setOnCloseRequest(event -> {
+			e.consume();
+			alert.hide();
+		});
 
 		return alert.showAndWait();
 	}

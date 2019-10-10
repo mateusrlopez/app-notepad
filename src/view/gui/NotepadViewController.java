@@ -3,6 +3,7 @@ package view.gui;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -181,6 +182,15 @@ public class NotepadViewController implements Initializable, Constants {
 		}
 	}
 	
+	@FXML private void addDate() {
+		currentTab = (TextTab) selectionModel.getSelectedItem();
+		if(currentTab != null) {
+			textArea = currentTab.getTextArea();
+			if (textArea.getSelectedText().equals("")) textArea.appendText(SDF.format(new Date()));
+			else textArea.replaceSelection(SDF.format(new Date()));;
+		}
+	}
+	
 	@FXML private void handleWrapText() {
 		for(int i=0; i<tabPane.getTabs().size(); i++) 
 			((TextTab)tabPane.getTabs().get(i)).getTextArea().setWrapText(wrapText.isSelected());
@@ -226,9 +236,11 @@ public class NotepadViewController implements Initializable, Constants {
 			for(int i=0; i<tabPane.getTabs().size(); i++) {
 				currentTab = (TextTab) tabPane.getTabs().get(i);
 				if(!currentTab.isSaved()) { 
-					Optional<ButtonType> result = Dialogs.showSaveAlert(BACKSP.apply(currentTab.getText()));
-					if(result.get().equals(Dialogs.buttonSalvar)) saveAction();
-					else if(result.get().equals(Dialogs.buttonCancelar)) event.consume();
+					Optional<ButtonType> result = Dialogs.showSaveAlert(BACKSP.apply(currentTab.getText()),event);
+					if(!result.isEmpty()) {
+						if(result.get().equals(Dialogs.buttonSalvar)) saveAction();
+						else if(result.get().equals(Dialogs.buttonCancelar)) event.consume();
+					}
 				}
 			}
 		});
