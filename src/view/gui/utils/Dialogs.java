@@ -38,4 +38,16 @@ public class Dialogs {
 
 		return alert.showAndWait();
 	}
+	
+	public static void showReplaceAlert(String replace) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Notepad");
+		alert.setContentText(String.format("Não foi possível encontrar \"%s\"", replace));
+		alert.setHeaderText(null);
+		
+		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+		stage.getIcons().add(new Image("/view/images/Notepad.png"));
+		
+		alert.showAndWait();
+	}
 }

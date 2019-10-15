@@ -1,9 +1,12 @@
 package model.entities;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
@@ -11,28 +14,24 @@ import javafx.scene.text.Font;
 import model.utils.Constants;
 import model.utils.FileHandler;
 import view.gui.NotepadViewController;
+import view.gui.TabViewController;
 import view.gui.utils.Dialogs;
 
 public class TextTab extends Tab implements Constants {
 	@FXML private TextArea textArea;
+	
 	private String filePath;
 	private boolean firstTimeSave;
 	private boolean saved;
+	
+	private TabViewController tabController;
 
 	public TextTab(File file,NotepadViewController controller,Font font) {
 		super((file == null) ? "untitled" : file.getName());
+		
 		firstTimeSave = file == null;
 		saved = true;
-		textArea = new TextArea();
-		textArea.setPrefSize(640,276);
-		if(font != null) textArea.setFont(font);
-		textArea.setText((file != null) ? FileHandler.fileReader(file.getAbsolutePath()):"");
-		textArea.textProperty().addListener((obs, oldValue, newValue) -> {
-			if(newValue != null && saved) {
-				setText(getText()+"*");
-				saved = false;
-			}
-		});
+		
 		this.setOnCloseRequest(event -> {
 			if(!saved) {
 				Optional<ButtonType> result = Dialogs.showSaveAlert(BACKSP.apply(getText()),event);
@@ -42,8 +41,27 @@ public class TextTab extends Tab implements Constants {
 				}
 			}
 		});
+		
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/view/gui/Tab.fxml"));
+		try {
+			Parent parent = (Parent) loader.load();
+			tabController = loader.<TabViewController>getController();
+			textArea = tabController.getTextArea();
+			if(font != null) textArea.setFont(font);
+			textArea.setText((file != null) ? FileHandler.fileReader(file.getAbsolutePath()):"");
+			textArea.textProperty().addListener((obs, oldValue, newValue) -> {
+				if(newValue != null && saved) {
+					setText(getText()+"*");
+					saved = false;
+				}
+			});
+			setContent(parent);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		filePath = (file == null) ? null : file.getAbsolutePath();
-		setContent(textArea);
 	}
 	
 	public TextArea getTextArea() {

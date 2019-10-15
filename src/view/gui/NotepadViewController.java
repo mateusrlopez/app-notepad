@@ -1,5 +1,6 @@
 package view.gui;
 
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -117,6 +118,7 @@ public class NotepadViewController implements Initializable, Constants {
 			fileSaver.setInitialDirectory(file.getParentFile());
 			currentTab.setFirstTimeSave(false);
 			currentTab.setFilePath(file.getAbsolutePath());
+			handleAddOpenRecent(file.getAbsolutePath());
 		}
 	}
 
@@ -167,10 +169,11 @@ public class NotepadViewController implements Initializable, Constants {
 	}
 	
 	@FXML private void handleDelete() {
-		TextTab currentTab = (TextTab) selectionModel.getSelectedItem();
+		currentTab = (TextTab) selectionModel.getSelectedItem();
 		if (currentTab != null) {
 			textArea = currentTab.getTextArea();
 			if(!textArea.getSelectedText().equals("")) textArea.replaceSelection("");
+			else textArea.deletePreviousChar();
 		}
 	}
 	
@@ -197,7 +200,7 @@ public class NotepadViewController implements Initializable, Constants {
 	}
 	
 	@FXML private void changeFont() {
-		createDialog();
+		createFontDialog();
 		if(FontDialogController.font != null) {
 			for(int i=0; i<tabPane.getTabs().size(); i++) {
 				currentTab = (TextTab) tabPane.getTabs().get(i);
@@ -206,7 +209,7 @@ public class NotepadViewController implements Initializable, Constants {
 		}
 	}
 	
-	private void createDialog() {
+	private void createFontDialog() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/gui/FontDialog.fxml"));
 			Pane pane = loader.load();
@@ -222,6 +225,45 @@ public class NotepadViewController implements Initializable, Constants {
 			stage.showAndWait();			
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	@FXML private void createReplaceDialog() {
+		currentTab = (TextTab) selectionModel.getSelectedItem();
+		if(currentTab != null) {
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/gui/ReplaceDialog.fxml"));
+				ReplaceDialogController.controller = this;
+				Pane pane = loader.load();
+				
+				Stage stage = new Stage();
+				stage.setTitle("Substituir");
+				stage.getIcons().add(new Image("/view/images/Notepad.png"));
+				stage.setScene(new Scene(pane));
+				stage.setResizable(false);
+				stage.initOwner(this.stage);
+				stage.initModality(Modality.WINDOW_MODAL);
+				stage.showAndWait();			
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void replaceFunction(boolean all, String locate, String replace) {
+		currentTab = (TextTab) selectionModel.getSelectedItem();
+		TextArea textArea = currentTab.getTextArea();
+		if(all) {
+			String replaceText = textArea.getText().replaceAll(locate,replace);
+			textArea.setText(replaceText);
+		} else {
+			if(!textArea.getText().contains(locate)) {
+				Toolkit.getDefaultToolkit().beep();
+				Dialogs.showReplaceAlert(locate);
+			} else {
+				String replaceText = textArea.getText().replaceFirst(locate, replace);
+				textArea.setText(replaceText);
+			}
 		}
 	}
 

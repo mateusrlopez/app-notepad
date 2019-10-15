@@ -22,8 +22,8 @@ import model.utils.Constants;
 import view.gui.utils.Constraints;
 
 public class FontDialogController implements Initializable,Constants {
-	@FXML private TextField fontTextField;
-	@FXML private TextField sizeTextField;
+	@FXML public TextField fontTextField;
+	@FXML public TextField sizeTextField;
 	
 	@FXML private ListView<String> fontListView;
 	@FXML private ListView<Integer> sizeListView;
@@ -69,7 +69,7 @@ public class FontDialogController implements Initializable,Constants {
 	}
 	
 	@FXML private void listViewAction(MouseEvent event) {
-		ListView listView =(ListView) event.getSource();
+		ListView listView = (ListView) event.getSource();
 		TextField textField = (listView.getId().equals("fontListView"))? fontTextField:sizeTextField;
 		textField.setText(listView.getSelectionModel().getSelectedItem().toString());
 	}

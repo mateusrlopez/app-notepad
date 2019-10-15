@@ -1,0 +1,33 @@
+.text-area{
+    -fx-text-fill: #ffffff;
+    -fx-display-caret: true;
+    -fx-text-box-border: #242424;
+}
+.text-area .content{
+	-fx-background-color: #242424;
+	-fx-padding: 5px;
+}
+
+.text-area .scroll-pane, 
+.text-area .scroll-pane .corner {
+	-fx-background-color: #494949;
+}
+.text-area .scroll-pane .scroll-bar:horizontal, 
+.text-area .scroll-pane .scroll-bar:vertical {
+	-fx-background-color: transparent;
+}
+.text-area .scroll-pane .scroll-bar:horizontal .thumb,
+.text-area .scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #121212;
+    -fx-background-radius: 7.0pt;
+}
+
+.hbox {
+	-fx-background-color: #494949;
+}
+
+.label{
+	-fx-text-fill: #ffffff;
+	-fx-font-family: Montserrat;
+	-fx-font-size: 10pt;
+}
