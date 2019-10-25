@@ -1,4 +1,4 @@
-package view.gui.utils;
+package view.gui.utils.dialogs;
 
 import java.util.Optional;
 

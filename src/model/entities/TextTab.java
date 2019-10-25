@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,7 +16,7 @@ import model.utils.Constants;
 import model.utils.FileHandler;
 import view.gui.NotepadViewController;
 import view.gui.TabViewController;
-import view.gui.utils.Dialogs;
+import view.gui.utils.dialogs.Dialogs;
 
 public class TextTab extends Tab implements Constants {
 	@FXML private TextArea textArea;
@@ -23,6 +24,7 @@ public class TextTab extends Tab implements Constants {
 	private String filePath;
 	private boolean firstTimeSave;
 	private boolean saved;
+	public static SimpleBooleanProperty wrapTextProperty = new SimpleBooleanProperty();
 	
 	private TabViewController tabController;
 
@@ -60,7 +62,8 @@ public class TextTab extends Tab implements Constants {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
+		textArea.wrapTextProperty().bind(wrapTextProperty);
 		filePath = (file == null) ? null : file.getAbsolutePath();
 	}
 	

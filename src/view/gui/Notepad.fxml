@@ -104,6 +104,22 @@
                         <KeyCodeCombination alt="UP" code="H" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#createLocateDialog" text="Localizar...">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="F" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="SEARCH" />
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" text="Localizar Próxima">
+                     <accelerator>
+                        <KeyCodeCombination alt="ANY" code="F3" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="SEARCH" />
+                     </graphic>
+                  </MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" onAction="#handleSelectAll" text="Selecionar Tudo">
                      <accelerator>
@@ -122,7 +138,7 @@
         </Menu>
             <Menu mnemonicParsing="false" text="Formatar">
               <items>
-                  <CheckMenuItem fx:id="wrapText" mnemonicParsing="false" onAction="#handleWrapText" text="Quebra de linha" />
+                  <CheckMenuItem fx:id="wrapText" mnemonicParsing="false" text="Quebra de linha" />
                   <MenuItem mnemonicParsing="false" onAction="#changeFont" text="Fonte..." />
               </items>
             </Menu>
@@ -130,7 +146,7 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" stylesheets="@NotepadStyle.css" VBox.vgrow="ALWAYS">
          <children>
-            <TabPane fx:id="tabPane" prefHeight="375.0" prefWidth="640.0" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children></AnchorPane>
   </children>
 </VBox>

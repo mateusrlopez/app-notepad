@@ -18,7 +18,7 @@
 }
 .text-area .scroll-pane .scroll-bar:horizontal .thumb,
 .text-area .scroll-pane .scroll-bar:vertical .thumb {
-    -fx-background-color: #121212;
+    -fx-background-color: linear-gradient(#b6b6b6,#828282);
     -fx-background-radius: 7.0pt;
 }
 

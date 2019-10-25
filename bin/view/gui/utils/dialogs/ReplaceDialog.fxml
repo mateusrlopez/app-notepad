@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="160.0" prefWidth="429.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.utils.dialogs.ReplaceDialogController">
+   <children>
+      <Button fx:id="btSubstituir" disable="true" layoutX="315.0" layoutY="37.0" mnemonicParsing="false" onAction="#onReplaceAction" prefHeight="25.0" prefWidth="101.0" text="Substituir" />
+      <Button layoutX="315.0" layoutY="121.0" mnemonicParsing="false" onAction="#onCancelAction" prefHeight="25.0" prefWidth="101.0" text="Cancelar" />
+      <Button fx:id="btSubstituirTodos" disable="true" layoutX="315.0" layoutY="80.0" mnemonicParsing="false" onAction="#onReplaceAllAction" prefHeight="25.0" prefWidth="101.0" text="Substituir Tudo" />
+      <TextField fx:id="replaceTextField" layoutX="20.0" layoutY="80.0" prefHeight="25.0" prefWidth="275.0" promptText="Substituir" />
+      <TextField fx:id="locateTextField" layoutX="20.0" layoutY="37.0" prefHeight="25.0" prefWidth="275.0" promptText="Localizar" />
+   </children>
+</AnchorPane>

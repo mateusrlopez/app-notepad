@@ -1,4 +1,4 @@
-package view.gui;
+package view.gui.utils.dialogs;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -36,7 +36,7 @@ public class FontDialogController implements Initializable,Constants {
 	@FXML private Button btOk;
 	@FXML private Button btCancelar;
 	
-	protected static Font font;	
+	public static Font font;	
 	
 	private static String lastFont;
 	private static double lastSize;

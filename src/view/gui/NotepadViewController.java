@@ -31,7 +31,9 @@ import model.entities.FileMenuItem;
 import model.entities.TextTab;
 import model.utils.Constants;
 import model.utils.FileHandler;
-import view.gui.utils.Dialogs;
+import view.gui.utils.dialogs.Dialogs;
+import view.gui.utils.dialogs.FontDialogController;
+import view.gui.utils.dialogs.ReplaceDialogController;
 
 public class NotepadViewController implements Initializable, Constants {
 	@FXML private Stage stage;
@@ -58,6 +60,8 @@ public class NotepadViewController implements Initializable, Constants {
 		fileSaver.setTitle("Salvar como");
 		fileSaver.setInitialFileName("Texto");
 		settingFileChooser(fileSaver);
+		
+		TextTab.wrapTextProperty.bind(wrapText.selectedProperty());
 
 		selectionModel = tabPane.getSelectionModel();
 	}
@@ -194,11 +198,6 @@ public class NotepadViewController implements Initializable, Constants {
 		}
 	}
 	
-	@FXML private void handleWrapText() {
-		for(int i=0; i<tabPane.getTabs().size(); i++) 
-			((TextTab)tabPane.getTabs().get(i)).getTextArea().setWrapText(wrapText.isSelected());
-	}
-	
 	@FXML private void changeFont() {
 		createFontDialog();
 		if(FontDialogController.font != null) {
@@ -211,7 +210,7 @@ public class NotepadViewController implements Initializable, Constants {
 	
 	private void createFontDialog() {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/gui/FontDialog.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/gui/utils/dialogs/FontDialog.fxml"));
 			Pane pane = loader.load();
 			
 			Stage stage = new Stage();
@@ -232,7 +231,7 @@ public class NotepadViewController implements Initializable, Constants {
 		currentTab = (TextTab) selectionModel.getSelectedItem();
 		if(currentTab != null) {
 			try {
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/gui/ReplaceDialog.fxml"));
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/gui/utils/dialogs/ReplaceDialog.fxml"));
 				ReplaceDialogController.controller = this;
 				Pane pane = loader.load();
 				
@@ -264,6 +263,35 @@ public class NotepadViewController implements Initializable, Constants {
 				String replaceText = textArea.getText().replaceFirst(locate, replace);
 				textArea.setText(replaceText);
 			}
+		}
+	}
+	
+	@FXML private void createLocateDialog() {
+		currentTab = (TextTab) selectionModel.getSelectedItem();
+		if(currentTab != null) {
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/gui/utils/dialogs/LocateDialog.fxml"));
+				ReplaceDialogController.controller = this;
+				Pane pane = loader.load();
+				
+				Stage stage = new Stage();
+				stage.setTitle("Localizar");
+				stage.getIcons().add(new Image("/view/images/Notepad.png"));
+				stage.setScene(new Scene(pane));
+				stage.setResizable(false);
+				stage.initOwner(this.stage);
+				stage.initModality(Modality.WINDOW_MODAL);
+				stage.showAndWait();			
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void locateFunction() {
+		currentTab = (TextTab) selectionModel.getSelectedItem();
+		if(currentTab != null) {
+			
 		}
 	}
 

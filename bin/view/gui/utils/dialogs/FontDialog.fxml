@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="325.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.FontDialogController">
+<AnchorPane prefHeight="325.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.utils.dialogs.FontDialogController">
    <children>
       <Button fx:id="btOk" layoutX="358.0" layoutY="290.0" mnemonicParsing="false" onAction="#buttonAction" prefHeight="30.0" prefWidth="65.0" text="Ok" />
       <Button fx:id="btCancelar" layoutX="429.0" layoutY="290.0" mnemonicParsing="false" onAction="#buttonAction" prefHeight="30.0" prefWidth="65.0" text="Cancelar" />
