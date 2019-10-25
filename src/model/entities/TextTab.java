@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,12 +12,13 @@ import javafx.scene.Parent;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
-import javafx.scene.text.Font;
 import model.utils.Constants;
 import model.utils.FileHandler;
 import view.gui.NotepadViewController;
 import view.gui.TabViewController;
+import view.gui.utils.Constraints;
 import view.gui.utils.dialogs.Dialogs;
+import view.gui.utils.dialogs.FontDialogController;
 
 public class TextTab extends Tab implements Constants {
 	@FXML private TextArea textArea;
@@ -28,7 +30,7 @@ public class TextTab extends Tab implements Constants {
 	
 	private TabViewController tabController;
 
-	public TextTab(File file,NotepadViewController controller,Font font) {
+	public TextTab(File file,NotepadViewController controller) {
 		super((file == null) ? "untitled" : file.getName());
 		
 		firstTimeSave = file == null;
@@ -50,7 +52,9 @@ public class TextTab extends Tab implements Constants {
 			Parent parent = (Parent) loader.load();
 			tabController = loader.<TabViewController>getController();
 			textArea = tabController.getTextArea();
-			if(font != null) textArea.setFont(font);
+			textArea.fontProperty().bind(Bindings.createObjectBinding(() -> FontDialogController.fontProperty.isNull()
+					.get()? FontDialogController.defaultFontProperty.get() : FontDialogController.fontProperty.get(), 
+							FontDialogController.fontProperty));
 			textArea.setText((file != null) ? FileHandler.fileReader(file.getAbsolutePath()):"");
 			textArea.textProperty().addListener((obs, oldValue, newValue) -> {
 				if(newValue != null && saved) {

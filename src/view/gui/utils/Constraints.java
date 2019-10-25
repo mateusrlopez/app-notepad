@@ -1,6 +1,8 @@
 package view.gui.utils;
 
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import model.utils.Constants;
 
 public class Constraints {
 	public static void setTextFieldInteger(TextField textField) {

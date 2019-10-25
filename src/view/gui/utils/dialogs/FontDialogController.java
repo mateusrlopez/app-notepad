@@ -3,6 +3,7 @@ package view.gui.utils.dialogs;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,7 +37,8 @@ public class FontDialogController implements Initializable,Constants {
 	@FXML private Button btOk;
 	@FXML private Button btCancelar;
 	
-	public static Font font;	
+	public static SimpleObjectProperty<Font> fontProperty = new SimpleObjectProperty<Font>();
+	public static SimpleObjectProperty<Font> defaultFontProperty = new SimpleObjectProperty<Font>(Font.font("Arial",12));
 	
 	private static String lastFont;
 	private static double lastSize;
@@ -48,7 +50,7 @@ public class FontDialogController implements Initializable,Constants {
 		fontTextField.setText((lastFont != null)? lastFont:"Arial");
 		sizeTextField.setText((lastSize != 0.0) ? String.format("%d",(int)lastSize):"12");
 		
-		addListener();
+		this.addListener();
 		
 		fontListView.setItems(fonts);
 		sizeListView.setItems(sizes);
@@ -59,12 +61,15 @@ public class FontDialogController implements Initializable,Constants {
 	@FXML private void buttonAction(ActionEvent event) {
 		Button button = (Button)event.getSource();
 		if(button.getId().equals("btOk")) {
-			font = Font.font(fontTextField.getText(), (boldCheckBox.isSelected())? FontWeight.BOLD:null,
-			(italicCheckBox.isSelected())? FontPosture.ITALIC:FontPosture.REGULAR,Double.parseDouble(sizeTextField.getText()));
+			fontProperty.set(Font.font(fontTextField.getText(), (boldCheckBox.isSelected())? FontWeight.BOLD:null,
+			(italicCheckBox.isSelected())? FontPosture.ITALIC:FontPosture.REGULAR,Double.parseDouble(sizeTextField.getText())));
 			lastSize = Double.parseDouble(sizeTextField.getText());
 			lastFont = fontTextField.getText();
-		} else 
-			font = null;
+		} else {
+			defaultFontProperty.set(fontProperty.get());
+			fontProperty.set(null);
+		}
+
 		((Stage)button.getScene().getWindow()).close();
 	}
 	

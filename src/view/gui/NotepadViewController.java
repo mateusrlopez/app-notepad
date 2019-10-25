@@ -131,7 +131,7 @@ public class NotepadViewController implements Initializable, Constants {
 	}
 
 	private void createTabs(File file) {
-		emptyTab = new TextTab(file,this,FontDialogController.font);
+		emptyTab = new TextTab(file,this);
 		tabPane.getTabs().add(emptyTab);
 		selectionModel.selectLast();
 	}
@@ -200,12 +200,6 @@ public class NotepadViewController implements Initializable, Constants {
 	
 	@FXML private void changeFont() {
 		createFontDialog();
-		if(FontDialogController.font != null) {
-			for(int i=0; i<tabPane.getTabs().size(); i++) {
-				currentTab = (TextTab) tabPane.getTabs().get(i);
-				currentTab.getTextArea().setFont(FontDialogController.font);
-			}
-		}
 	}
 	
 	private void createFontDialog() {
@@ -218,7 +212,10 @@ public class NotepadViewController implements Initializable, Constants {
 			stage.getIcons().add(new Image("/view/images/Notepad.png"));
 			stage.setScene(new Scene(pane));
 			stage.setResizable(false);
-			stage.setOnCloseRequest(event -> FontDialogController.font = null);
+			stage.setOnCloseRequest(event -> {
+				FontDialogController.defaultFontProperty.set(FontDialogController.fontProperty.get());
+				FontDialogController.fontProperty.set(null);
+			});
 			stage.initOwner(this.stage);
 			stage.initModality(Modality.WINDOW_MODAL);
 			stage.showAndWait();			
