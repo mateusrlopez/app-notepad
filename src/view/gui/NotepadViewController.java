@@ -32,7 +32,6 @@ import model.entities.TextTab;
 import model.utils.Constants;
 import model.utils.FileHandler;
 import view.gui.utils.dialogs.Dialogs;
-import view.gui.utils.dialogs.FontDialogController;
 import view.gui.utils.dialogs.ReplaceDialogController;
 
 public class NotepadViewController implements Initializable, Constants {
@@ -109,7 +108,7 @@ public class NotepadViewController implements Initializable, Constants {
 			if(currentTab.isFirstTimeSave()) {
 				File file = fileSaver.showSaveDialog(stage);
 				if(file != null) handleSaves(true,file);
-			} else handleSaves(true,null);
+			} else handleSaves(false,null);
 		}
 	}
 	
@@ -212,10 +211,6 @@ public class NotepadViewController implements Initializable, Constants {
 			stage.getIcons().add(new Image("/view/images/Notepad.png"));
 			stage.setScene(new Scene(pane));
 			stage.setResizable(false);
-			stage.setOnCloseRequest(event -> {
-				FontDialogController.defaultFontProperty.set(FontDialogController.fontProperty.get());
-				FontDialogController.fontProperty.set(null);
-			});
 			stage.initOwner(this.stage);
 			stage.initModality(Modality.WINDOW_MODAL);
 			stage.showAndWait();			

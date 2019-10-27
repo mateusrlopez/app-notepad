@@ -4,19 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import model.utils.Constants;
 import model.utils.FileHandler;
 import view.gui.NotepadViewController;
 import view.gui.TabViewController;
-import view.gui.utils.Constraints;
 import view.gui.utils.dialogs.Dialogs;
 import view.gui.utils.dialogs.FontDialogController;
 
@@ -49,20 +47,18 @@ public class TextTab extends Tab implements Constants {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("/view/gui/Tab.fxml"));
 		try {
-			Parent parent = (Parent) loader.load();
+			ScrollPane sPane = loader.load();			
 			tabController = loader.<TabViewController>getController();
 			textArea = tabController.getTextArea();
-			textArea.fontProperty().bind(Bindings.createObjectBinding(() -> FontDialogController.fontProperty.isNull()
-					.get()? FontDialogController.defaultFontProperty.get() : FontDialogController.fontProperty.get(), 
-							FontDialogController.fontProperty));
+			textArea.fontProperty().bind(FontDialogController.fontProperty);		
 			textArea.setText((file != null) ? FileHandler.fileReader(file.getAbsolutePath()):"");
-			textArea.textProperty().addListener((obs, oldValue, newValue) -> {
+			textArea.textProperty().addListener((obs, oldValue, newValue) -> {				
 				if(newValue != null && saved) {
 					setText(getText()+"*");
 					saved = false;
 				}
 			});
-			setContent(parent);
+			setContent(sPane);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

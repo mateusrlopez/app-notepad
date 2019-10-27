@@ -37,8 +37,7 @@ public class FontDialogController implements Initializable,Constants {
 	@FXML private Button btOk;
 	@FXML private Button btCancelar;
 	
-	public static SimpleObjectProperty<Font> fontProperty = new SimpleObjectProperty<Font>();
-	public static SimpleObjectProperty<Font> defaultFontProperty = new SimpleObjectProperty<Font>(Font.font("Arial",12));
+	public static SimpleObjectProperty<Font> fontProperty = new SimpleObjectProperty<Font>(Font.font("Arial",12));
 	
 	private static String lastFont;
 	private static double lastSize;
@@ -65,9 +64,6 @@ public class FontDialogController implements Initializable,Constants {
 			(italicCheckBox.isSelected())? FontPosture.ITALIC:FontPosture.REGULAR,Double.parseDouble(sizeTextField.getText())));
 			lastSize = Double.parseDouble(sizeTextField.getText());
 			lastFont = fontTextField.getText();
-		} else {
-			defaultFontProperty.set(fontProperty.get());
-			fontProperty.set(null);
 		}
 
 		((Stage)button.getScene().getWindow()).close();
