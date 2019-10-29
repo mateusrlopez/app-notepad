@@ -112,7 +112,7 @@
                         <FontAwesomeIcon fill="WHITE" glyphName="SEARCH" />
                      </graphic>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Localizar Próxima">
+                  <MenuItem mnemonicParsing="false" onAction="#locateNextFunction" text="Localizar Próxima">
                      <accelerator>
                         <KeyCodeCombination alt="ANY" code="F3" control="UP" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>

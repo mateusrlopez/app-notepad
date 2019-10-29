@@ -39,10 +39,10 @@ public class Dialogs {
 		return alert.showAndWait();
 	}
 	
-	public static void showReplaceAlert(String replace) {
+	public static void showReplaceLocateAlert(String replace,String msg) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Notepad");
-		alert.setContentText(String.format("Não foi possível encontrar \"%s\"", replace));
+		alert.setContentText(String.format("%s \"%s\"",msg,replace));
 		alert.setHeaderText(null);
 		
 		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();

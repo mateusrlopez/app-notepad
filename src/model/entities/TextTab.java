@@ -19,7 +19,8 @@ import view.gui.utils.dialogs.Dialogs;
 import view.gui.utils.dialogs.FontDialogController;
 
 public class TextTab extends Tab implements Constants {
-	@FXML private TextArea textArea;
+	@FXML
+	private TextArea textArea;
 	
 	private String filePath;
 	private boolean firstTimeSave;

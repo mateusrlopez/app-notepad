@@ -11,7 +11,8 @@ import javafx.stage.Stage;
 import view.gui.NotepadViewController;
 
 public class Main extends Application {
-	@Override public void start(Stage stage) {
+	@Override 
+	public void start(Stage stage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/gui/Notepad.fxml"));
 			Parent parent = (Parent) loader.load();

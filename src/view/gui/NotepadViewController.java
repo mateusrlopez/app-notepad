@@ -32,27 +32,37 @@ import model.entities.TextTab;
 import model.utils.Constants;
 import model.utils.FileHandler;
 import view.gui.utils.dialogs.Dialogs;
+import view.gui.utils.dialogs.LocateDialogController;
 import view.gui.utils.dialogs.ReplaceDialogController;
 
 public class NotepadViewController implements Initializable, Constants {
-	@FXML private Stage stage;
+	@FXML 
+	private Stage stage;
 
-	@FXML private TabPane tabPane;
-	@FXML private TextTab emptyTab;
-	@FXML private SingleSelectionModel<Tab> selectionModel;
+	@FXML
+	private TabPane tabPane;
+	@FXML
+	private TextTab emptyTab;
+	@FXML
+	private SingleSelectionModel<Tab> selectionModel;
 	
-	@FXML private Menu openRecent;
-	@FXML private CheckMenuItem wrapText;
+	@FXML 
+	private Menu openRecent;
+	@FXML 
+	private CheckMenuItem wrapText;
 	
-	@FXML private final Clipboard clipboard = Clipboard.getSystemClipboard();
-    @FXML private final ClipboardContent content = new ClipboardContent();
+	@FXML
+	private final Clipboard clipboard = Clipboard.getSystemClipboard();
+    @FXML
+    private final ClipboardContent content = new ClipboardContent();
 
     private TextTab currentTab;
     private TextArea textArea;
 	private FileChooser fileLoader = new FileChooser();
 	private FileChooser fileSaver = new FileChooser();
 
-	@Override public void initialize(URL url, ResourceBundle rb) {
+	@Override 
+	public void initialize(URL url, ResourceBundle rb) {
 		fileLoader.setTitle("Abrir");
 		settingFileChooser(fileLoader);
 
@@ -61,7 +71,8 @@ public class NotepadViewController implements Initializable, Constants {
 		settingFileChooser(fileSaver);
 		
 		TextTab.wrapTextProperty.bind(wrapText.selectedProperty());
-
+		LocateDialogController.mainController = this;
+		
 		selectionModel = tabPane.getSelectionModel();
 	}
 	
@@ -73,7 +84,8 @@ public class NotepadViewController implements Initializable, Constants {
 				new FileChooser.ExtensionFilter("Arquivo Python", "*.py"));
 	}
 
-	@FXML public void handleOpenAction() {
+	@FXML
+	private void handleOpenAction() {
 		List<File> files = fileLoader.showOpenMultipleDialog(stage);
 		if (files != null)
 			for (File file : files) {
@@ -91,14 +103,16 @@ public class NotepadViewController implements Initializable, Constants {
 		}
 	}
 
-	@FXML private void handleSaveAsAction() {
+	@FXML 
+	private void handleSaveAsAction() {
 		File file = fileSaver.showSaveDialog(stage);
 		currentTab = (TextTab) selectionModel.getSelectedItem();
 		if (file != null && currentTab != null) 
 			handleSaves(true,file);			
 		}
 	
-	@FXML private void handleSaveAction() {
+	@FXML 
+	private void handleSaveAction() {
 		saveAction();
 	}
 	
@@ -125,7 +139,8 @@ public class NotepadViewController implements Initializable, Constants {
 		}
 	}
 
-	@FXML private void handleNewTabs() {
+	@FXML 
+	private void handleNewTabs() {
 		createTabs(null);
 	}
 
@@ -135,7 +150,8 @@ public class NotepadViewController implements Initializable, Constants {
 		selectionModel.selectLast();
 	}
 	
-	@FXML private void handleUndo() {
+	@FXML 
+	private void handleUndo() {
 		currentTab = (TextTab) selectionModel.getSelectedItem();
 		if(currentTab != null) {
 			textArea = currentTab.getTextArea();
@@ -143,7 +159,8 @@ public class NotepadViewController implements Initializable, Constants {
 		}
 	}
 	
-	@FXML private void handleCut() {
+	@FXML 
+	private void handleCut() {
 		TextTab currentTab = (TextTab) selectionModel.getSelectedItem();
 		if(currentTab != null) {
 		    content.putString(currentTab.getTextArea().getSelectedText());
@@ -152,7 +169,8 @@ public class NotepadViewController implements Initializable, Constants {
 		}
 	}
 	
-	@FXML private void handleCopy() {
+	@FXML
+	private void handleCopy() {
 		TextTab currentTab = (TextTab) selectionModel.getSelectedItem();
 		if(currentTab != null) {
 		    content.putString(currentTab.getTextArea().getSelectedText());
@@ -160,7 +178,8 @@ public class NotepadViewController implements Initializable, Constants {
 		}
 	}
 	
-	@FXML private void handlePaste() {
+	@FXML 
+	private void handlePaste() {
 		TextTab currentTab = (TextTab) selectionModel.getSelectedItem();
 		if(currentTab != null && clipboard.hasString()) {
 			textArea = currentTab.getTextArea();
@@ -171,7 +190,8 @@ public class NotepadViewController implements Initializable, Constants {
 		}
 	}
 	
-	@FXML private void handleDelete() {
+	@FXML 
+	private void handleDelete() {
 		currentTab = (TextTab) selectionModel.getSelectedItem();
 		if (currentTab != null) {
 			textArea = currentTab.getTextArea();
@@ -180,7 +200,8 @@ public class NotepadViewController implements Initializable, Constants {
 		}
 	}
 	
-	@FXML private void handleSelectAll() {
+	@FXML 
+	private void handleSelectAll() {
 		currentTab = (TextTab) selectionModel.getSelectedItem();
 		if (currentTab != null) {
 			textArea = currentTab.getTextArea();
@@ -188,7 +209,8 @@ public class NotepadViewController implements Initializable, Constants {
 		}
 	}
 	
-	@FXML private void addDate() {
+	@FXML 
+	private void addDate() {
 		currentTab = (TextTab) selectionModel.getSelectedItem();
 		if(currentTab != null) {
 			textArea = currentTab.getTextArea();
@@ -197,7 +219,8 @@ public class NotepadViewController implements Initializable, Constants {
 		}
 	}
 	
-	@FXML private void changeFont() {
+	@FXML 
+	private void changeFont() {
 		createFontDialog();
 	}
 	
@@ -219,7 +242,8 @@ public class NotepadViewController implements Initializable, Constants {
 		}
 	}
 	
-	@FXML private void createReplaceDialog() {
+	@FXML 
+	private void createReplaceDialog() {
 		currentTab = (TextTab) selectionModel.getSelectedItem();
 		if(currentTab != null) {
 			try {
@@ -250,7 +274,7 @@ public class NotepadViewController implements Initializable, Constants {
 		} else {
 			if(!textArea.getText().contains(locate)) {
 				Toolkit.getDefaultToolkit().beep();
-				Dialogs.showReplaceAlert(locate);
+				Dialogs.showReplaceLocateAlert(locate,"Não foi possível substituir");
 			} else {
 				String replaceText = textArea.getText().replaceFirst(locate, replace);
 				textArea.setText(replaceText);
@@ -258,7 +282,8 @@ public class NotepadViewController implements Initializable, Constants {
 		}
 	}
 	
-	@FXML private void createLocateDialog() {
+	@FXML 
+	private void createLocateDialog() {
 		currentTab = (TextTab) selectionModel.getSelectedItem();
 		if(currentTab != null) {
 			try {
@@ -272,8 +297,7 @@ public class NotepadViewController implements Initializable, Constants {
 				stage.setScene(new Scene(pane));
 				stage.setResizable(false);
 				stage.initOwner(this.stage);
-				stage.initModality(Modality.WINDOW_MODAL);
-				stage.showAndWait();			
+				stage.showAndWait();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -282,8 +306,26 @@ public class NotepadViewController implements Initializable, Constants {
 	
 	public void locateFunction() {
 		currentTab = (TextTab) selectionModel.getSelectedItem();
+		String toLocate = LocateDialogController.toLocateText.get();
 		if(currentTab != null) {
-			
+			TextArea textA = currentTab.getTextArea();
+			int caretPos = textA.getCaretPosition();
+			int pos = textA.getText().indexOf(toLocate, caretPos);
+			if(pos > -1) textA.selectRange(pos,pos+toLocate.length());
+			else {
+				Toolkit.getDefaultToolkit().beep();
+				Dialogs.showReplaceLocateAlert(toLocate,"Não foi possível localizar");
+			}
+		}
+	}
+	
+	@FXML
+	private void locateNextFunction() {
+		currentTab = (TextTab) selectionModel.getSelectedItem();
+		String toLocate = LocateDialogController.toLocateText.get();
+		if(currentTab != null) {
+			if(toLocate.equals("")) createLocateDialog();
+			else locateFunction();
 		}
 	}
 

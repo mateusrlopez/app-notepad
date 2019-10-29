@@ -9,14 +9,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
 public class TabViewController implements Initializable {
-	@FXML private TextArea textArea;
+	@FXML 
+	private TextArea textArea;
 	
-	@FXML private Label labelColumnsLines;
+	@FXML 
+	private Label labelColumnsLines;
 	
 	private int line;
 	private int column;
 
-	@Override public void initialize(URL url, ResourceBundle rb) {
+	@Override 
+	public void initialize(URL url, ResourceBundle rb) {
 		labelColumnsLines.setText("Line 1, Column 1");
 		
 		textArea.hoverProperty().addListener(event -> {

@@ -23,19 +23,28 @@ import model.utils.Constants;
 import view.gui.utils.Constraints;
 
 public class FontDialogController implements Initializable,Constants {
-	@FXML public TextField fontTextField;
-	@FXML public TextField sizeTextField;
+	@FXML
+	private TextField fontTextField;
+	@FXML 
+	private TextField sizeTextField;
 	
-	@FXML private ListView<String> fontListView;
-	@FXML private ListView<Integer> sizeListView;
+	@FXML 
+	private ListView<String> fontListView;
+	@FXML 
+	private ListView<Integer> sizeListView;
 	
-	@FXML private CheckBox boldCheckBox;
-	@FXML private CheckBox italicCheckBox;
+	@FXML 
+	private CheckBox boldCheckBox;
+	@FXML
+	private CheckBox italicCheckBox;
 	
-	@FXML private Label labelPreview;
+	@FXML
+	private Label labelPreview;
 	
-	@FXML private Button btOk;
-	@FXML private Button btCancelar;
+	@FXML 
+	private Button btOk;
+	@FXML 
+	private Button btCancelar;
 	
 	public static SimpleObjectProperty<Font> fontProperty = new SimpleObjectProperty<Font>(Font.font("Arial",12));
 	
@@ -45,7 +54,8 @@ public class FontDialogController implements Initializable,Constants {
 	private ObservableList<String> fonts = FXCollections.observableArrayList(Font.getFamilies());
 	private ObservableList<Integer> sizes = FXCollections.observableArrayList(SIZES_VALUES);
 	
-	@Override public void initialize(URL url, ResourceBundle rb) {
+	@Override 
+	public void initialize(URL url, ResourceBundle rb) {
 		fontTextField.setText((lastFont != null)? lastFont:"Arial");
 		sizeTextField.setText((lastSize != 0.0) ? String.format("%d",(int)lastSize):"12");
 		
@@ -57,7 +67,8 @@ public class FontDialogController implements Initializable,Constants {
 		Constraints.setTextFieldInteger(sizeTextField);
 	}
 	
-	@FXML private void buttonAction(ActionEvent event) {
+	@FXML 
+	private void buttonAction(ActionEvent event) {
 		Button button = (Button)event.getSource();
 		if(button.getId().equals("btOk")) {
 			fontProperty.set(Font.font(fontTextField.getText(), (boldCheckBox.isSelected())? FontWeight.BOLD:null,
@@ -69,7 +80,8 @@ public class FontDialogController implements Initializable,Constants {
 		((Stage)button.getScene().getWindow()).close();
 	}
 	
-	@FXML private void listViewAction(MouseEvent event) {
+	@FXML 
+	private void listViewAction(MouseEvent event) {
 		ListView listView = (ListView) event.getSource();
 		TextField textField = (listView.getId().equals("fontListView"))? fontTextField:sizeTextField;
 		textField.setText(listView.getSelectionModel().getSelectedItem().toString());

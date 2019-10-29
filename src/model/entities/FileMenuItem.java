@@ -7,7 +7,8 @@ public class FileMenuItem extends MenuItem {
 		super(text);
 	}
 	
-	@Override public boolean equals(Object o) {
+	@Override 
+	public boolean equals(Object o) {
 		if(o instanceof FileMenuItem)
 			return ((FileMenuItem)o).getText().equalsIgnoreCase(getText());
 		return false;
