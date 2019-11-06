@@ -8,6 +8,10 @@
 	-fx-padding: 5px;
 }
 
+.text-area .scroll-pane{
+	-fx-hbar-policy: always;
+	-fx-vbar-policy: always;
+}
 .text-area .scroll-pane, 
 .text-area .scroll-pane .corner {
 	-fx-background-color: #494949;

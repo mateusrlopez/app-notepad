@@ -4,10 +4,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.utils.dialogs.LocateDialogController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="445.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.utils.dialogs.LocateDialogController">
    <children>
-      <TextField fx:id="toLocateTxtField" layoutX="14.0" layoutY="50.0" prefHeight="25.0" prefWidth="281.0" promptText="Localizar" />
-      <Button fx:id="toLocateBt" disable="true" layoutX="325.0" layoutY="50.0" mnemonicParsing="false" onAction="#onLocateBtAction" prefHeight="25.0" prefWidth="111.0" text="Localizar" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="325.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="50.0" />
-      <Button layoutX="325.0" layoutY="111.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="25.0" prefWidth="111.0" text="Cancelar" />
+      <TextField fx:id="toLocateTxtField" layoutX="14.0" layoutY="50.0" prefHeight="25.0" prefWidth="275.0" promptText="Localizar" />
+      <Button fx:id="toLocateBt" disable="true" layoutX="316.0" layoutY="50.0" mnemonicParsing="false" onAction="#onLocateBtAction" prefHeight="25.0" prefWidth="101.0" text="Localizar" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="316.0" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="50.0" />
+      <Button layoutX="316.0" layoutY="111.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="25.0" prefWidth="101.0" text="Cancelar" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="316.0" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="111.0" />
    </children>
 </AnchorPane>
