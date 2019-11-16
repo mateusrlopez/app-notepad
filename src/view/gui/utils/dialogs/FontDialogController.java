@@ -52,7 +52,7 @@ public class FontDialogController implements Initializable,Constants {
 	private static double lastSize;
 	
 	private ObservableList<String> fonts = FXCollections.observableArrayList(Font.getFamilies());
-	private ObservableList<Integer> sizes = FXCollections.observableArrayList(SIZES_VALUES);
+	private ObservableList<Integer> sizes = FXCollections.observableArrayList(SizeValues);
 	
 	@Override 
 	public void initialize(URL url, ResourceBundle rb) {

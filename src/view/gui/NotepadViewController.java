@@ -77,7 +77,7 @@ public class NotepadViewController implements Initializable, Constants {
 	}
 	
 	private void settingFileChooser(FileChooser fileChooser) {
-		fileChooser.setInitialDirectory(new File(INITIAL_DIRECTORY));
+		fileChooser.setInitialDirectory(new File(InitialDirectory));
 		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Arquivo de texto", "*.txt"),
 				new FileChooser.ExtensionFilter("Arquivo C/C++", "*.c", "*.cpp"),
 				new FileChooser.ExtensionFilter("Arquivo Java", "*.java"),
@@ -129,7 +129,7 @@ public class NotepadViewController implements Initializable, Constants {
 	private void handleSaves(boolean type,File file) {
 		String text = currentTab.getTextArea().getText().replaceAll("\n", System.getProperty("line.separator"));
 		FileHandler.fileWriter((type)?file.getAbsolutePath():currentTab.getFilePath(),text);
-		currentTab.setText((type)?file.getName():BACKSP.apply(currentTab.getText()));
+		currentTab.setText((type)?file.getName():Backsp.apply(currentTab.getText()));
 		currentTab.setSaved(true);
 		if(type) {
 			fileSaver.setInitialDirectory(file.getParentFile());
@@ -214,8 +214,8 @@ public class NotepadViewController implements Initializable, Constants {
 		currentTab = (TextTab) selectionModel.getSelectedItem();
 		if(currentTab != null) {
 			textArea = currentTab.getTextArea();
-			if (textArea.getSelectedText().equals("")) textArea.appendText(SDF.format(new Date()));
-			else textArea.replaceSelection(SDF.format(new Date()));;
+			if (textArea.getSelectedText().equals("")) textArea.appendText(SimpleDateFormat.format(new Date()));
+			else textArea.replaceSelection(SimpleDateFormat.format(new Date()));;
 		}
 	}
 	
@@ -340,7 +340,7 @@ public class NotepadViewController implements Initializable, Constants {
 			for(int i=0; i<tabPane.getTabs().size(); i++) {
 				currentTab = (TextTab) tabPane.getTabs().get(i);
 				if(!currentTab.isSaved()) { 
-					Optional<ButtonType> result = Dialogs.showSaveAlert(BACKSP.apply(currentTab.getText()),event);
+					Optional<ButtonType> result = Dialogs.showSaveAlert(Backsp.apply(currentTab.getText()),event);
 					if(!result.isEmpty()) {
 						if(result.get().equals(Dialogs.buttonSalvar)) saveAction();
 						else if(result.get().equals(Dialogs.buttonCancelar)) event.consume();

@@ -37,7 +37,7 @@ public class TextTab extends Tab implements Constants {
 		
 		this.setOnCloseRequest(event -> {
 			if(!saved) {
-				Optional<ButtonType> result = Dialogs.showSaveAlert(BACKSP.apply(getText()),event);
+				Optional<ButtonType> result = Dialogs.showSaveAlert(Backsp.apply(getText()),event);
 				if(!result.isEmpty()) {
 					if(result.get().equals(Dialogs.buttonSalvar)) controller.saveAction();
 					else if(result.get().equals(Dialogs.buttonCancelar)) event.consume();
